@@ -1,19 +1,8 @@
-const fs = require("fs");
-const path = require("path");
-const webpush = require("web-push");
+import { getStore } from "@netlify/blobs";
+import webpush from "web-push";
 
-const filePath = path.join(process.cwd(), "subscriptions.json");
-
-function lerSubs() {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
-}
-
-function salvarSubs(subs) {
-  fs.writeFileSync(filePath, JSON.stringify(subs, null, 2));
-}
-
-exports.handler = async (event) => {
-  const body = event.body ? JSON.parse(event.body) : {};
+export default async (req, context) => {
+  const store = getStore("subscriptions");
 
   webpush.setVapidDetails(
     "mailto:admin@ssrx-radar",
@@ -21,31 +10,28 @@ exports.handler = async (event) => {
     process.env.VAPID_PRIVATE_KEY
   );
 
-  // salvar inscrição do usuário
-  if (body.type === "subscribe") {
-    const subs = lerSubs();
-    subs.push(body.sub);
-    salvarSubs(subs);
+  const body = req.body ? JSON.parse(req.body) : {};
 
-    return {
-      statusCode: 200,
-      body: "subscribed"
-    };
+  // salvar inscrição
+  if (body.type === "subscribe") {
+    const id = crypto.randomUUID();
+    await store.set(id, JSON.stringify(body.sub));
+    return new Response("subscribed");
   }
 
-  // enviar push para todos
+  // enviar push
   if (body.type === "broadcast") {
-    const subs = lerSubs();
     const payload = JSON.stringify(body.payload);
 
-    for (const sub of subs) {
+    for await (const { key, value } of store.list()) {
+      const sub = JSON.parse(value);
       try {
         await webpush.sendNotification(sub, payload);
       } catch (e) {}
     }
 
-    return { statusCode: 200, body: "sent" };
+    return new Response("sent");
   }
 
-  return { statusCode: 200, body: "noop" };
+  return new Response("noop");
 };
