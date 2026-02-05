@@ -1,3 +1,7 @@
+export const config = {
+  schedule: "*/1 * * * *"
+};
+
 import { getStore } from "@netlify/blobs";
 import webpush from "web-push";
 
