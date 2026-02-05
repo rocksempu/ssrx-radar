@@ -2,6 +2,9 @@ export const config = {
   schedule: "*/1 * * * *"
 };
 
+import crypto from "crypto";
+globalThis.crypto = crypto.webcrypto;
+
 import { getStore } from "@netlify/blobs";
 import webpush from "web-push";
 
