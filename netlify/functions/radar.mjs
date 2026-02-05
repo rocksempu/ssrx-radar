@@ -8,11 +8,9 @@ globalThis.crypto = crypto.webcrypto;
 import { getStore } from "@netlify/blobs";
 import webpush from "web-push";
 
-const MARCOS = ["Inscrições","Pareamento","Resultado","Preparação","Trégua"];
-
 function horaParaMin(hora) {
-  const [h,m] = hora.split(":").map(Number);
-  return h*60 + m;
+  const [h, m] = hora.split(":").map(Number);
+  return h * 60 + m;
 }
 
 function minutosAgora() {
@@ -34,15 +32,13 @@ export default async () => {
     process.env.VAPID_PRIVATE_KEY
   );
 
-  // 🔥 carrega events.json do site
+  // carrega events.json do site
   const resp = await fetch("https://ssrx-radar.netlify.app/events.json");
   const eventos = await resp.json();
 
   const hoje = diaHoje();
   const lista = eventos[hoje] || [];
   const agoraMin = minutosAgora();
-
-  const { blobs } = await store.list();
 
   for (const e of lista) {
     const inicio = horaParaMin(e.hora);
@@ -55,11 +51,14 @@ export default async () => {
         body: `${e.evento} (${e.tipo}) abre em instantes!`
       });
 
-      for (const b of blobs) {
-        const sub = JSON.parse(await store.get(b.key));
+      // ✅ API correta do Blobs (iterator)
+      for await (const item of store.list()) {
         try {
+          const sub = JSON.parse(await store.get(item.key));
           await webpush.sendNotification(sub, payload);
-        } catch {}
+        } catch (err) {
+          // se falhar, ignora (subscription inválida)
+        }
       }
     }
   }
