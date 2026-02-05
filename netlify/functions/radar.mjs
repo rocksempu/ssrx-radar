@@ -6,8 +6,8 @@ import { getStore } from "@netlify/blobs";
 import webpush from "web-push";
 
 function horaParaMin(hora) {
-  const [h, m] = hora.split(":").map(Number);
-  return h * 60 + m;
+  const [h,m] = hora.split(":").map(Number);
+  return h*60 + m;
 }
 
 function minutosAgora() {
@@ -29,7 +29,6 @@ export default async () => {
     process.env.VAPID_PRIVATE_KEY
   );
 
-  // carrega events.json do site
   const resp = await fetch("https://ssrx-radar.netlify.app/events.json");
   const eventos = await resp.json();
 
@@ -40,7 +39,6 @@ export default async () => {
   for (const e of lista) {
     const inicio = horaParaMin(e.hora);
 
-    // janela DE 15 minutos antes
     if (inicio - agoraMin <= 15 && inicio - agoraMin > 0) {
 
       const payload = JSON.stringify({
@@ -48,14 +46,12 @@ export default async () => {
         body: `${e.evento} (${e.tipo}) abre em instantes!`
       });
 
-      // ✅ API correta do Blobs (iterator)
-      for await (const item of store.list()) {
+      // 🔥 API CORRETA DO BLOBS
+      for await (const { key, value } of store.list()) {
+        const sub = JSON.parse(value);
         try {
-          const sub = JSON.parse(await store.get(item.key));
           await webpush.sendNotification(sub, payload);
-        } catch (err) {
-          // se falhar, ignora (subscription inválida)
-        }
+        } catch {}
       }
     }
   }
