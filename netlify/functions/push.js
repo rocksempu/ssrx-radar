@@ -1,7 +1,8 @@
-import { getStore } from "@netlify/blobs";
-import webpush from "web-push";
+const { getStore } = require("@netlify/blobs");
+const webpush = require("web-push");
+const crypto = require("crypto");
 
-export default async (req, context) => {
+exports.handler = async (event) => {
   const store = getStore("subscriptions");
 
   webpush.setVapidDetails(
@@ -10,13 +11,17 @@ export default async (req, context) => {
     process.env.VAPID_PRIVATE_KEY
   );
 
-  const body = req.body ? JSON.parse(req.body) : {};
+  const body = event.body ? JSON.parse(event.body) : {};
 
   // salvar inscrição
   if (body.type === "subscribe") {
     const id = crypto.randomUUID();
     await store.set(id, JSON.stringify(body.sub));
-    return new Response("subscribed");
+
+    return {
+      statusCode: 200,
+      body: "subscribed"
+    };
   }
 
   // enviar push
@@ -30,8 +35,14 @@ export default async (req, context) => {
       } catch (e) {}
     }
 
-    return new Response("sent");
+    return {
+      statusCode: 200,
+      body: "sent"
+    };
   }
 
-  return new Response("noop");
+  return {
+    statusCode: 200,
+    body: "noop"
+  };
 };
