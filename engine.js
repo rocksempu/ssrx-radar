@@ -1,4 +1,7 @@
-const STORAGE_KEY = "ssrx_eventos";
+async function carregarEventos() {
+  const resp = await fetch("events.json");
+  return await resp.json();
+}
 
 function diaHoje() {
   const dias = ["domingo","segunda","terca","quarta","quinta","sexta","sabado"];
@@ -20,8 +23,8 @@ function ehMarco(tipo) {
   return marcos.includes(tipo);
 }
 
-function classificar() {
-  const eventos = JSON.parse(localStorage.getItem(STORAGE_KEY));
+async function classificar() {
+  const eventos = await carregarEventos();
   const hoje = diaHoje();
   const lista = eventos[hoje] || [];
 
@@ -46,7 +49,6 @@ function classificar() {
     el.innerHTML = `${e.hora} - <b>${e.evento}</b> (${e.tipo})`;
 
     if (marco) {
-      // Evento de ponto único
       if (agoraMin === inicio) {
         agoraDiv.appendChild(el);
       } else if (inicio - agoraMin <= 15 && inicio - agoraMin > 0) {
@@ -57,7 +59,6 @@ function classificar() {
         perdidosDiv.appendChild(el);
       }
     } else {
-      // Evento de duração
       const fim = inicio + e.duracao;
 
       if (agoraMin >= inicio && agoraMin <= fim) {
