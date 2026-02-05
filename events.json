@@ -48,7 +48,7 @@
     { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
     { "evento": "Campo de Batalha Ancestral", "tipo": "Preparação", "hora": "11:00", "duracao": 30 },
     { "evento": "Campo de Batalha do Vazio", "tipo": "Trégua", "hora": "11:00", "duracao": 30 },
-    { "evento": "Evento de Teste3", "tipo": "Abertura", "hora": "19:50", "duracao": 30 }
+    { "evento": "Evento de Teste3", "tipo": "Abertura", "hora": "20:08", "duracao": 30 }
   ],
 
   "sexta": [
