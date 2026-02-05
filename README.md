@@ -101,4 +101,5 @@ O SSRX Radar resolve isso transformando a agenda do jogo em notificações autom
 Esse projeto é open-source e feito para ajudar a comunidade do SSRX (Saint Seiya Rebirth/EX).
 
 Contribuições são bem-vindas.
-Agradecimento especial ao nosso colega Digs por fortalecer a comunidade.
+
+Agradecimento especial ao nosso colega ❤️ Digs ❤️ por fortalecer a comunidade.
