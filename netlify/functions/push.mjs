@@ -23,15 +23,13 @@ export default async (req) => {
   if (body.type === "broadcast") {
     const payload = JSON.stringify(body.payload);
 
-    const keys = await store.getKeys();   // 👈 AQUI
+    const { blobs } = await store.list();
 
-    for (const key of keys) {
-      const value = await store.get(key);
-      const sub = JSON.parse(value);
-
+    for (const b of blobs) {
+      const sub = JSON.parse(await store.get(b.key));
       try {
         await webpush.sendNotification(sub, payload);
-      } catch {}
+      } catch (e) {}
     }
 
     return new Response("sent");
