@@ -1,0 +1,70 @@
+{
+  "domingo": [
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "18:00", "duracao": 30 },
+    { "evento": "Expedição da Legião", "tipo": "Pareamento", "hora": "18:00", "duracao": 30 },
+    { "evento": "Campo de Batalha Ancestral", "tipo": "Inscrições", "hora": "21:00", "duracao": 30 },
+    { "evento": "Campo de Batalha do Vazio", "tipo": "Inscrições", "hora": "21:00", "duracao": 30 },
+    { "evento": "Expedição da Legião", "tipo": "Abertura", "hora": "23:00", "duracao": 30 },
+
+    { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
+    { "evento": "Provacão Divina", "tipo": "Abertura", "hora": "09:00", "duracao": 30 },
+    { "evento": "Arena Galáctica", "tipo": "Prêmio Semanal", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
+    { "evento": "Torneio do Santuário", "tipo": "Resultado", "hora": "11:00", "duracao": 30 }
+  ],
+
+  "segunda": [
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "18:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
+    { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 }
+  ],
+
+  "terca": [
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "18:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
+    { "evento": "Aventura em Alto Mar", "tipo": "Abertura", "hora": "09:00", "duracao": 30 },
+    { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
+    { "evento": "Campo de Batalha do Vazio", "tipo": "Pareamento", "hora": "13:00", "duracao": 30 }
+  ],
+
+  "quarta": [
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "18:00", "duracao": 30 },
+    { "evento": "Campo de Batalha do Vazio", "tipo": "Abertura", "hora": "21:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
+    { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
+    { "evento": "Campo de Batalha do Vazio", "tipo": "Trégua", "hora": "11:00", "duracao": 30 }
+  ],
+
+  "quinta": [
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "10:36", "duracao": 30 },
+    { "evento": "Campo de Batalha Ancestral", "tipo": "Abertura", "hora": "21:00", "duracao": 30 },
+    { "evento": "Campo de Batalha do Vazio", "tipo": "Abertura", "hora": "21:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
+    { "evento": "Aventura em Alto Mar", "tipo": "Abertura", "hora": "09:00", "duracao": 30 },
+    { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
+    { "evento": "Campo de Batalha Ancestral", "tipo": "Preparação", "hora": "11:00", "duracao": 30 },
+    { "evento": "Campo de Batalha do Vazio", "tipo": "Trégua", "hora": "11:00", "duracao": 30 }
+  ],
+
+  "sexta": [
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
+    { "evento": "Campo de Batalha do Vazio", "tipo": "Resultado", "hora": "09:00", "duracao": 30 },
+    { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 }
+  ],
+
+  "sabado": [
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "18:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
+    { "evento": "Aventura em Alto Mar", "tipo": "Abertura", "hora": "09:00", "duracao": 30 },
+    { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
+    { "evento": "Campo de Batalha Ancestral", "tipo": "Resultado", "hora": "11:00", "duracao": 30 },
+    { "evento": "Expedição da Legião", "tipo": "Resultado", "hora": "11:00", "duracao": 30 }
+  ]
+}
