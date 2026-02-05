@@ -6,23 +6,32 @@ import { getStore } from "@netlify/blobs";
 import webpush from "web-push";
 
 function horaParaMin(hora) {
-  const [h,m] = hora.split(":").map(Number);
-  return h*60 + m;
+  const [h, m] = hora.split(":").map(Number);
+  return h * 60 + m;
 }
 
-function minutosAgora() {
-  const agora = new Date();
+// 🔥 força horário do Brasil (GMT-3) dentro da Netlify
+function agoraBrasil() {
+  return new Date(
+    new Date().toLocaleString("en-US", {
+      timeZone: "America/Sao_Paulo"
+    })
+  );
+}
+
+function minutosAgoraBrasil() {
+  const agora = agoraBrasil();
   return agora.getHours() * 60 + agora.getMinutes();
 }
 
-function diaHoje() {
+function diaHojeBrasil() {
   const dias = ["domingo","segunda","terca","quarta","quinta","sexta","sabado"];
-  return dias[new Date().getDay()];
+  return dias[agoraBrasil().getDay()];
 }
 
 export default async () => {
 
-  // 🔥 OBRIGATÓRIO para scheduled function
+  // 🔥 obrigatório para scheduled function
   const store = getStore({
     name: "subscriptions",
     siteID: process.env.SITE_ID,
@@ -38,16 +47,19 @@ export default async () => {
   const resp = await fetch("https://ssrx-radar.netlify.app/events.json");
   const eventos = await resp.json();
 
-  const hoje = diaHoje();
+  const hoje = diaHojeBrasil();
   const lista = eventos[hoje] || [];
-  const agoraMin = minutosAgora();
+  const agoraMin = minutosAgoraBrasil();
 
+  // 🔥 API correta do Blobs
   const { blobs } = await store.list();
 
   for (const e of lista) {
     const inicio = horaParaMin(e.hora);
+    const diff = inicio - agoraMin;
 
-    if (inicio - agoraMin <= 15 && inicio - agoraMin > 0) {
+    // janela de 15 minutos
+    if (diff <= 15 && diff > 0) {
 
       const payload = JSON.stringify({
         title: "⏰ SSRX Radar",
@@ -55,8 +67,8 @@ export default async () => {
       });
 
       for (const b of blobs) {
-        const sub = JSON.parse(await store.get(b.key));
         try {
+          const sub = JSON.parse(await store.get(b.key));
           await webpush.sendNotification(sub, payload);
         } catch {}
       }
