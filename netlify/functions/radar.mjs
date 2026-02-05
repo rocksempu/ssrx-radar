@@ -6,22 +6,29 @@ import { getStore } from "@netlify/blobs";
 import webpush from "web-push";
 
 function horaParaMin(hora) {
-  const [h,m] = hora.split(":").map(Number);
-  return h*60 + m;
+  const [h, m] = hora.split(":").map(Number);
+  return h * 60 + m;
 }
 
-function minutosAgora() {
-  const agora = new Date();
+function agoraBrasil() {
+  return new Date(
+    new Date().toLocaleString("en-US", {
+      timeZone: "America/Sao_Paulo"
+    })
+  );
+}
+
+function minutosAgoraBrasil() {
+  const agora = agoraBrasil();
   return agora.getHours() * 60 + agora.getMinutes();
 }
 
-function diaHoje() {
+function diaHojeBrasil() {
   const dias = ["domingo","segunda","terca","quarta","quinta","sexta","sabado"];
-  return dias[new Date().getDay()];
+  return dias[agoraBrasil().getDay()];
 }
 
 export default async () => {
-
   const store = getStore({
     name: "subscriptions",
     siteID: process.env.SITE_ID,
@@ -37,9 +44,9 @@ export default async () => {
   const resp = await fetch("https://ssrx-radar.netlify.app/events.json");
   const eventos = await resp.json();
 
-  const hoje = diaHoje();
+  const hoje = diaHojeBrasil();
   const lista = eventos[hoje] || [];
-  const agoraMin = minutosAgora();
+  const agoraMin = minutosAgoraBrasil();
 
   const { blobs } = await store.list();
 
@@ -47,12 +54,10 @@ export default async () => {
     const inicio = horaParaMin(e.hora);
     const diff = inicio - agoraMin;
 
-    // janela de 15 minutos
     if (diff <= 15 && diff > 0) {
 
       const idEvento = `${hoje}-${e.evento}-${e.tipo}-${e.hora}`;
 
-      // 🔥 verifica se já enviou hoje
       const jaEnviado = await store.get(`sent-${idEvento}`);
       if (jaEnviado) continue;
 
@@ -61,14 +66,16 @@ export default async () => {
         body: `${e.evento} (${e.tipo}) abre em instantes!`
       });
 
+      // 🔥 SOMENTE subscriptions
       for (const b of blobs) {
-        const sub = JSON.parse(await store.get(b.key));
+        if (b.key.startsWith("sent-")) continue;
+
         try {
+          const sub = JSON.parse(await store.get(b.key));
           await webpush.sendNotification(sub, payload);
         } catch {}
       }
 
-      // 🔥 marca no servidor que já enviou
       await store.set(`sent-${idEvento}`, "ok");
     }
   }
