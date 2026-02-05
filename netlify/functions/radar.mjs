@@ -40,7 +40,7 @@ export default async () => {
   for (const e of lista) {
     const inicio = horaParaMin(e.hora);
 
-    // janela de 15 minutos antes
+    // janela DE 15 minutos antes
     if (inicio - agoraMin <= 15 && inicio - agoraMin > 0) {
 
       const payload = JSON.stringify({
