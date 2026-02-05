@@ -1,28 +1,3 @@
-const PUSH_KEY = "ssrx_push_enviados";
-
-async function dispararPush(evento, hoje, idEvento) {
-  try {
-    await fetch("/.netlify/functions/push", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: "broadcast",
-        payload: {
-          title: "⏰ SSRX Radar",
-          body: `${evento.evento} (${evento.tipo}) abre em instantes!`
-        }
-      })
-    });
-
-    const enviados = JSON.parse(localStorage.getItem(PUSH_KEY) || "{}");
-    enviados[idEvento] = true;
-    localStorage.setItem(PUSH_KEY, JSON.stringify(enviados));
-
-  } catch (e) {
-    console.error("Erro ao disparar push", e);
-  }
-}
-
 async function carregarEventos() {
   const resp = await fetch("events.json");
   return await resp.json();
@@ -48,24 +23,9 @@ function ehMarco(tipo) {
   return marcos.includes(tipo);
 }
 
-function limparPushDoDiaAnterior(hoje) {
-  const enviados = JSON.parse(localStorage.getItem(PUSH_KEY) || "{}");
-  const filtrado = {};
-
-  Object.keys(enviados).forEach(k => {
-    if (k.startsWith(hoje)) {
-      filtrado[k] = true;
-    }
-  });
-
-  localStorage.setItem(PUSH_KEY, JSON.stringify(filtrado));
-}
-
 async function classificar() {
   const eventos = await carregarEventos();
   const hoje = diaHoje();
-  limparPushDoDiaAnterior(hoje);
-
   const lista = eventos[hoje] || [];
 
   const agoraDiv = document.getElementById("agora");
@@ -79,31 +39,22 @@ async function classificar() {
   perdidosDiv.innerHTML = "";
 
   const agoraMin = minutosAgora();
-  const enviados = JSON.parse(localStorage.getItem(PUSH_KEY) || "{}");
 
   lista.forEach(e => {
     const inicio = horaParaMin(e.hora);
     const marco = ehMarco(e.tipo);
+
     const el = document.createElement("div");
     el.className = "evento";
     el.innerHTML = `${e.hora} - <b>${e.evento}</b> (${e.tipo})`;
 
-    const idEvento = `${hoje}-${e.evento}-${e.tipo}-${e.hora}`;
     const diff = inicio - agoraMin;
-
-    // janela de alerta: exatamente entre 15 e 1 minutos antes
-    const deveAlertar = diff <= 15 && diff > 0;
 
     if (marco) {
       if (agoraMin === inicio) {
         agoraDiv.appendChild(el);
-      } else if (deveAlertar) {
+      } else if (diff <= 15 && diff > 0) {
         breveDiv.appendChild(el);
-
-        if (!enviados[idEvento]) {
-          dispararPush(e, hoje, idEvento);
-        }
-
       } else if (agoraMin < inicio) {
         hojeDiv.appendChild(el);
       } else {
@@ -114,13 +65,8 @@ async function classificar() {
 
       if (agoraMin >= inicio && agoraMin <= fim) {
         agoraDiv.appendChild(el);
-      } else if (deveAlertar) {
+      } else if (diff <= 15 && diff > 0) {
         breveDiv.appendChild(el);
-
-        if (!enviados[idEvento]) {
-          dispararPush(e, hoje, idEvento);
-        }
-
       } else if (agoraMin < inicio) {
         hojeDiv.appendChild(el);
       } else {
