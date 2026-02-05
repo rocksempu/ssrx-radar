@@ -12,24 +12,38 @@ export default async (req) => {
 
   const body = await req.json();
 
-  // salvar inscrição
+  // ============================
+  // SALVAR INSCRIÇÃO (sem duplicar)
+  // ============================
   if (body.type === "subscribe") {
-    const id = crypto.randomUUID();
-    await store.set(id, JSON.stringify(body.sub));
+    const sub = body.sub;
+
+    // evita duplicar inscrição do mesmo navegador
+    const key = sub.endpoint.split("/").pop();
+
+    await store.set(key, JSON.stringify(sub));
+
     return new Response("subscribed");
   }
 
-  // enviar push
+  // ============================
+  // ENVIAR PUSH + AUTO LIMPEZA
+  // ============================
   if (body.type === "broadcast") {
     const payload = JSON.stringify(body.payload);
 
-    const { blobs } = await store.list();
+    const list = await store.list();
 
-    for (const b of blobs) {
-      const sub = JSON.parse(await store.get(b.key));
+    for (const item of list.blobs) {
       try {
+        const raw = await store.get(item.key);
+        const sub = JSON.parse(raw);
+
         await webpush.sendNotification(sub, payload);
-      } catch (e) {}
+      } catch (err) {
+        // inscrição morreu -> remove do blob
+        await store.delete(item.key);
+      }
     }
 
     return new Response("sent");
