@@ -21,7 +21,13 @@ function diaHoje() {
 }
 
 export default async () => {
-  const store = getStore("subscriptions");
+
+  // 🔥 OBRIGATÓRIO para scheduled function
+  const store = getStore({
+    name: "subscriptions",
+    siteID: process.env.SITE_ID,
+    token: process.env.NETLIFY_API_TOKEN
+  });
 
   webpush.setVapidDetails(
     "mailto:admin@ssrx-radar",
@@ -36,6 +42,8 @@ export default async () => {
   const lista = eventos[hoje] || [];
   const agoraMin = minutosAgora();
 
+  const { blobs } = await store.list();
+
   for (const e of lista) {
     const inicio = horaParaMin(e.hora);
 
@@ -46,9 +54,8 @@ export default async () => {
         body: `${e.evento} (${e.tipo}) abre em instantes!`
       });
 
-      // 🔥 API CORRETA DO BLOBS
-      for await (const { key, value } of store.list()) {
-        const sub = JSON.parse(value);
+      for (const b of blobs) {
+        const sub = JSON.parse(await store.get(b.key));
         try {
           await webpush.sendNotification(sub, payload);
         } catch {}
