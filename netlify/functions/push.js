@@ -12,17 +12,23 @@ export default async (req) => {
 
   const body = await req.json();
 
+  // salvar inscrição
   if (body.type === "subscribe") {
     const id = crypto.randomUUID();
     await store.set(id, JSON.stringify(body.sub));
     return new Response("subscribed");
   }
 
+  // enviar push
   if (body.type === "broadcast") {
     const payload = JSON.stringify(body.payload);
 
-    for await (const { value } of store.list()) {
+    const keys = await store.getKeys();   // 👈 AQUI
+
+    for (const key of keys) {
+      const value = await store.get(key);
       const sub = JSON.parse(value);
+
       try {
         await webpush.sendNotification(sub, payload);
       } catch {}
