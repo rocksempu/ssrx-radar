@@ -141,3 +141,10 @@ O SSRX Radar transforma os horários do jogo em notificações automáticas.
 Projeto open-source feito para ajudar a comunidade do SSRX.
 
 Agradecimento especial ao ❤️ Digs ❤️ por fortalecer a comunidade.
+
+---
+
+## ❓ Dúvidas comuns
+
+Antes de pedir ajuda, veja:
+👉 https://ssrx-radar.netlify.app/faq.html
