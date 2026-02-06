@@ -52,7 +52,7 @@
   ],
 
   "sexta": [
-    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "10:00", "duracao": 30 },
+    { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "18:00", "duracao": 30 },
     { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
     { "evento": "Campo de Batalha do Vazio", "tipo": "Resultado", "hora": "09:00", "duracao": 30 },
     { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
