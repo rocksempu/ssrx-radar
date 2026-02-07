@@ -55,7 +55,6 @@ export default async () => {
     const diff = inicio - agoraMin;
 
     if (diff <= 15 && diff > 0) {
-
       const idEvento = `${hoje}-${e.evento}-${e.tipo}-${e.hora}`;
 
       const jaEnviado = await store.get(`sent-${idEvento}`);
@@ -66,16 +65,21 @@ export default async () => {
         body: `${e.evento} (${e.tipo}) abre em instantes!`
       });
 
-      // 🔥 SOMENTE subscriptions
+      // 🔥 envia para todas subscriptions válidas
       for (const b of blobs) {
         if (b.key.startsWith("sent-")) continue;
 
         try {
           const sub = JSON.parse(await store.get(b.key));
           await webpush.sendNotification(sub, payload);
-        } catch {}
+        } catch (err) {
+          if (err.statusCode === 410 || err.statusCode === 404) {
+            await store.delete(b.key);
+          }
+        }
       }
 
+      // 🔥 marca que já enviou SOMENTE depois de enviar para todos
       await store.set(`sent-${idEvento}`, "ok");
     }
   }
