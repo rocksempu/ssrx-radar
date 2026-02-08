@@ -4,6 +4,13 @@ async function enablePush() {
     return;
   }
 
+  // 🔥 deviceId persistente (não é dado pessoal - LGPD safe)
+  const deviceId =
+    localStorage.getItem("ssrx_device_id") ||
+    crypto.randomUUID();
+
+  localStorage.setItem("ssrx_device_id", deviceId);
+
   const reg = await navigator.serviceWorker.ready;
 
   const sub = await reg.pushManager.subscribe({
@@ -15,7 +22,8 @@ async function enablePush() {
     method: "POST",
     body: JSON.stringify({
       type: "subscribe",
-      sub: sub
+      sub: sub,
+      deviceId: deviceId   // 👈 ESSA É A MÁGICA
     })
   });
 
