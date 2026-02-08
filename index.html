@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SSRX Event Radar</title>
+
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <h1>📡 SSRX Event Radar</h1>
+
+  <button onclick="enablePush()">🔔 Ativar alertas</button>
+
+  <div class="bloco">
+    <h2>🟢 Ativo Agora</h2>
+    <div id="agora"></div>
+  </div>
+
+  <div class="bloco">
+    <h2>🟡 Abre em Breve</h2>
+    <div id="breve"></div>
+  </div>
+
+  <div class="bloco">
+    <h2>🔵 Hoje</h2>
+    <div id="hoje"></div>
+  </div>
+
+  <div class="bloco">
+    <h2>🔴 Perdidos</h2>
+    <div id="perdidos"></div>
+  </div>
+
+  <script src="engine.js"></script>
+  <script src="pwa.js"></script>
+  <script src="push-client.js"></script>
+</body>
+</html>

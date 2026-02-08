@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SSRX Radar - Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <h1>📡 SSRX Event Radar — Admin</h1>
+
+  <div class="form">
+    <select id="dia">
+      <option>domingo</option>
+      <option>segunda</option>
+      <option>terça</option>
+      <option>quarta</option>
+      <option>quinta</option>
+      <option>sexta</option>
+      <option>sábado</option>
+    </select>
+
+    <input id="evento" placeholder="Nome do Evento"/>
+    <input id="fase" placeholder="Fase / Observação"/>
+    <input id="hora" type="time"/>
+    <input id="duracao" type="number" placeholder="Duração (min)"/>
+
+    <button onclick="addEvento()">Adicionar</button>
+  </div>
+
+  <h2>Eventos cadastrados</h2>
+  <div id="lista"></div>
+
+  <div class="actions">
+    <button onclick="exportar()">Exportar JSON</button>
+    <input type="file" onchange="importar(event)"/>
+  </div>
+
+  <script src="storage.js"></script>
+</body>
+</html>
