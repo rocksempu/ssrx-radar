@@ -10,15 +10,15 @@
     { "evento": "Provacão Divina", "tipo": "Abertura", "hora": "09:00", "duracao": 30 },
     { "evento": "Arena Galáctica", "tipo": "Prêmio Semanal", "hora": "10:00", "duracao": 30 },
     { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
-    { "evento": "Torneio do Santuário", "tipo": "Resultado", "hora": "11:00", "duracao": 30 },
-    { "evento": "Teste 11", "tipo": "Resultado", "hora": "23:20", "duracao": 30 }
+    { "evento": "Torneio do Santuário", "tipo": "Resultado", "hora": "11:00", "duracao": 30 }
   ],
 
   "segunda": [
     { "evento": "Batalha de Pamir", "tipo": "Inscrições", "hora": "18:00", "duracao": 30 },
     { "evento": "Batalha de Pamir", "tipo": "Preliminares", "hora": "07:50", "duracao": 30 },
     { "evento": "Arena Galáctica", "tipo": "Prêmio Diário", "hora": "10:00", "duracao": 30 },
-    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 }
+    { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
+    { "evento": "Teste envio de msg", "tipo": "Resultado", "hora": "10:50", "duracao": 30 }
   ],
 
   "terca": [
