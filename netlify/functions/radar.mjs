@@ -50,6 +50,13 @@ export default async () => {
 
   const { blobs } = await store.list();
 
+  // 🧹 LIMPEZA DOS sent- DE DIAS ANTERIORES
+  for (const b of blobs) {
+    if (b.key.startsWith("sent-") && !b.key.startsWith(`sent-${hoje}`)) {
+      await store.delete(b.key);
+    }
+  }
+
   for (const e of lista) {
     const inicio = horaParaMin(e.hora);
     const diff = inicio - agoraMin;
