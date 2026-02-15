@@ -10,7 +10,8 @@
     { "evento": "Provacão Divina", "tipo": "Abertura", "hora": "09:00", "duracao": 30 },
     { "evento": "Arena Galáctica", "tipo": "Prêmio Semanal", "hora": "10:00", "duracao": 30 },
     { "evento": "Batalha de Pamir", "tipo": "Final", "hora": "10:13", "duracao": 30 },
-    { "evento": "Torneio do Santuário", "tipo": "Resultado", "hora": "11:00", "duracao": 30 }
+    { "evento": "Torneio do Santuário", "tipo": "Resultado", "hora": "11:00", "duracao": 30 },
+    { "evento": "Briga Temporal", "tipo": "Inscrições", "hora": "21:00", "duracao": 30 },
   ],
 
   "segunda": [
