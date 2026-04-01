@@ -167,6 +167,12 @@
       "tipo": "Trégua",
       "hora": "11:00",
       "duracao": 30
+    },
+    {
+      "evento": "Teste",
+      "tipo": "Final",
+      "hora": "16:30",
+      "duracao": 10
     }
   ],
   "quinta": [
