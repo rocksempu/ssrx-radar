@@ -1,185 +1,70 @@
-# 📡 SSRX Event Radar — Saint Seiya Rebirth / EX
+# SSRX Event Radar
 
-O **SSRX Radar** avisa automaticamente quando os eventos do jogo estão prestes a abrir.
+Avisos automáticos quando os eventos do **Saint Seiya Rebirth / EX** estão prestes a abrir — sem depender de planilha ou print.
 
-Você não precisa mais olhar planilhas, prints ou horários.
-
-O radar avisa você. 🔔
+**Site:** [https://ssrx-radar.netlify.app](https://ssrx-radar.netlify.app)
 
 ---
 
-## ✅ O que o Radar faz
+## O que você ganha
 
-- Mostra os eventos organizados por horário
-- Indica o que está ativo agora
-- Indica o que vai abrir em breve
-- Envia **notificação automática 15 minutos antes**
-- Funciona mesmo com navegador fechado
-- Funciona como **aplicativo instalado (PWA)**
+- Agenda do dia organizada no app
+- Indicadores do que está ativo, do que abre em breve e do que já passou
+- **Notificação cerca de 15 minutos antes** do horário do evento (via servidor)
+- Funciona como **aplicativo (PWA)** no celular ou no PC
 
 ---
 
-# 🖥️ SE VOCÊ ESTÁ NO PC / NOTEBOOK (Windows, Mac, Linux)
+## Instalar e ativar — escolha seu aparelho
 
-## 1) Acesse o Radar
+### Computador (Windows, Mac ou Linux)
 
-Abra no Chrome ou Edge:
+1. Abra o link no **Chrome** ou **Edge**: [ssrx-radar.netlify.app](https://ssrx-radar.netlify.app)
+2. **Instale como aplicativo** (ícone de instalar na barra de endereço, ou menu do navegador → algo como “Instalar SSRX Event Radar” / “Instalar página como app”).
+3. Abra o **app instalado** e clique em **Ativar alertas**.
+4. Quando o navegador pedir, **permita notificações**.
 
-👉 https://ssrx-radar.netlify.app
-
----
-
-## 2) Instale como aplicativo (PASSO MAIS IMPORTANTE)
-
-Você precisa transformar o site em um **app**.
-
-O botão pode aparecer em lugares diferentes:
-
-### Opção A — Ícone na barra de endereço
-Clique no ícone de **monitor com +** → **Instalar**
-
-### Opção B — Menu tradicional
-Menu ⋮ → **Instalar SSRX Event Radar**
-
-### Opção C — Chrome novo
-Menu ⋮ → **Transmitir, salvar e compartilhar** → **Instalar página como app**
-
-Depois disso, o Radar vira um aplicativo igual WhatsApp/Discord no seu computador.
-
-Ele vai aparecer na barra do Windows / Dock do Mac.
+Pronto: pode fechar o navegador; o aviso pode aparecer pelo sistema operacional.
 
 ---
 
-## 3) Ative as notificações
+### Android
 
-Abra o app instalado e clique em:
-
-🔔 **Ativar alertas**
-
-Permita as notificações quando o navegador pedir.
-
----
-
-## ✅ Pronto (PC)
-
-Agora você pode:
-
-- Fechar o app
-- Fechar o navegador
-- Usar o PC normalmente
-
-Quando faltar 15 minutos para um evento…
-
-🔔 O sistema operacional vai avisar você automaticamente.
+1. Abra o link no **Chrome**: [ssrx-radar.netlify.app](https://ssrx-radar.netlify.app)
+2. Menu **⋮** → **Adicionar à tela inicial** (ou “Instalar app”, se aparecer).
+3. Abra o ícone do Radar na tela inicial.
+4. Toque em **Ativar alertas** e **permita notificações**.
 
 ---
 
-# 📱 SE VOCÊ ESTÁ NO CELULAR (Android ou iPhone)
+### iPhone (iOS)
 
-## 1) Abra o link no navegador do celular
-
-👉 https://ssrx-radar.netlify.app
-
-Use **Chrome (Android)** ou **Safari (iPhone)**.
-
----
-
-## 2) Adicione à tela inicial
-
-### Android (Chrome)
-Menu ⋮ → **Adicionar à tela inicial**
-
-### iPhone (Safari)
-Botão de compartilhar → **Adicionar à Tela de Início**
-
-Isso transforma o Radar em um aplicativo no seu celular.
+1. Abra o link no **Safari** (outros navegadores no iPhone costumam não permitir notificação push igual).
+2. Toque em **Compartilhar** → **Adicionar à Tela de Início**.
+3. Abra o app pela tela inicial.
+4. Toque em **Ativar alertas** e **permita notificações**.
 
 ---
 
-## 3) Abra o app instalado e ative os alertas
+## Precisa fazer de novo?
 
-Toque em:
+Se você **limpar dados do site**, **desinstalar o app** ou **trocar de aparelho**, abra o Radar de novo e toque em **Ativar alertas**.
 
-🔔 **Ativar alertas**
-
-Permita as notificações.
+Na página do app também aparecem o **ID deste aparelho** (anonimizado) e a opção de **remover cadastro de alertas**, se precisar recomeçar.
 
 ---
 
-## ✅ Pronto (Celular)
+## Dúvidas?
 
-Pode fechar tudo.
-
-Quando faltar 15 minutos para um evento…
-
-🔔 Seu celular vai avisar automaticamente.
-
----
-
-## ❗ Importante
-
-Se você:
-
-- Limpar dados do navegador
-- Desinstalar o app
-- Trocar de celular / computador
-
-Será necessário repetir os passos.
+| Para quem | Onde |
+|-----------|------|
+| Uso no dia a dia, notificação não chegou, etc. | [FAQ — perguntas frequentes](https://ssrx-radar.netlify.app/faq.html) |
+| Quem mantém o projeto (agenda, GitHub, testes, Netlify) | [FAQ técnica (mantenedores)](https://ssrx-radar.netlify.app/faq_tech.html) |
 
 ---
 
-## 💡 Por que isso existe?
+## Projeto comunitário
 
-A agenda do jogo é difícil de acompanhar durante os eventos.
+Open source para a comunidade do SSRX. Agradecimento especial ao **Digs** por fortalecer a comunidade.
 
-O SSRX Radar transforma os horários do jogo em notificações automáticas.
-
----
-
-## ❤️ Projeto comunitário
-
-Projeto open-source feito para ajudar a comunidade do SSRX.
-
-Agradecimento especial ao ❤️ Digs ❤️ por fortalecer a comunidade.
-
----
-
-## ❓ Dúvidas comuns
-
-Antes de pedir ajuda, veja:
-👉 https://ssrx-radar.netlify.app/faq.html
-
----
-
-## 🛠️ Painel local de manutenção de eventos
-
-Para facilitar cadastro, edição e exclusão de eventos no `events.json`, existe um painel desktop:
-
-- Arquivo Python: `eventos_admin_gui.py`
-- Atalho Windows: `abrir_painel_eventos.bat`
-
-### Como usar
-
-1. Dê dois cliques em `abrir_painel_eventos.bat`
-2. Preencha os campos e clique em:
-   - `Adicionar` para novo evento
-   - `Salvar edicao` para atualizar evento selecionado
-   - `Excluir selecionado` para remover evento
-3. O script atualiza o `events.json` automaticamente e cria backup:
-   - `events_backup_YYYYMMDD-HHMMSS.json`
-
-### Requisitos
-
-- Python 3 instalado no Windows (ou em outro sistema operacional)
-- Não precisa de dependências externas
-
-### Publicacao no GitHub pelo proprio painel
-
-Depois de ajustar os eventos no painel, clique no botao `Publicar no GitHub`.
-
-O painel executa automaticamente:
-- `git add events.json`
-- commit com mensagem padrao e timestamp
-- `git push`
-
-Assim, toda a manutencao e publicacao ficam centralizadas no `eventos_admin_gui.py`.
+Repositório: [github.com/rocksempu/ssrx-radar](https://github.com/rocksempu/ssrx-radar)

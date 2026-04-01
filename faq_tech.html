@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>FAQ técnica — SSRX Event Radar (mantenedores)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background:#0f1115;
+      color:#e6e6e6;
+      padding:20px;
+      line-height:1.65;
+      max-width:900px;
+      margin:auto;
+    }
+    h1,h2{
+      color:#4fc3f7;
+    }
+    .box{
+      background:#1b1f27;
+      padding:15px 18px;
+      margin:15px 0;
+      border-radius:8px;
+    }
+    code, pre{
+      background:#12151c;
+      color:#b8e986;
+      padding:2px 6px;
+      border-radius:4px;
+      font-size:0.92em;
+    }
+    pre{
+      padding:12px;
+      overflow-x:auto;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+    a{ color:#81d4fa; }
+    .back{ margin-bottom:20px; }
+  </style>
+</head>
+<body>
+
+<p class="back"><a href="faq.html">← Voltar ao FAQ para usuários</a> · <a href="index.html">Abrir o Radar</a></p>
+
+<h1>FAQ técnica — mantenedores</h1>
+<p>Documentação para quem edita a agenda, publica no GitHub ou configura o Netlify. Usuários finais devem usar o <a href="faq.html">FAQ normal</a> e o <a href="README.md">README</a> do repositório (versão amigável).</p>
+
+<div class="box">
+<h2>Agenda (<code>events.json</code>)</h2>
+<p>O radar lê os horários do arquivo <code>events.json</code> publicado no site. O fuso usado na lógica de aviso é o <strong>horário de Brasília</strong>.</p>
+<p>Para editar sem mexer no JSON na mão, existe um painel desktop no repositório:</p>
+<ul>
+<li><code>eventos_admin_gui.py</code></li>
+<li><code>abrir_painel_eventos.bat</code> (atalho no Windows)</li>
+</ul>
+<p>O painel gera backup automático ao salvar: <code>events_backup_YYYYMMDD-HHMMSS.json</code> (arquivos de backup costumam estar no <code>.gitignore</code>).</p>
+</div>
+
+<div class="box">
+<h2>Publicar no GitHub</h2>
+<p>No painel, use o botão <strong>Publicar no GitHub</strong> após alterar a agenda (faz <code>git add</code> em <code>events.json</code>, commit e <code>git push</code>). Exige Git instalado e repositório configurado na pasta do projeto.</p>
+<p><strong>Rollback:</strong> antes de um deploy arriscado, faça um commit ou tag no Git (<code>git tag snapshot-pre-deploy</code>). Para voltar, use <code>git revert</code> ou restaure arquivos de um commit anterior.</p>
+</div>
+
+<div class="box">
+<h2>Teste manual de broadcast (push para todos)</h2>
+<p>O endpoint <code>/.netlify/functions/push</code> aceita POST com corpo no formato:</p>
+<pre>{"type":"broadcast","payload":{"title":"...","body":"..."}}</pre>
+<p>Scripts locais (sem abrir ReqBin) no repositório:</p>
+<ul>
+<li><code>testar_broadcast_local.ps1</code></li>
+<li><code>testar_broadcast_local.bat</code></li>
+<li><code>testar_broadcast_local.py</code></li>
+</ul>
+<p>Apontam para a URL de produção; falhas de entrega podem remover inscrições inválidas do armazenamento (comportamento do servidor).</p>
+</div>
+
+<div class="box">
+<h2>Inscrições e <code>deviceId</code></h2>
+<p>As inscrições de push ficam no <strong>Netlify Blobs</strong> (store <code>subscriptions</code>). A chave do blob continua sendo derivada do endpoint do provedor de push; o <strong>valor</strong> armazenado inclui <code>subscription</code>, <code>deviceId</code> (UUID no navegador) e <code>createdAt</code> para facilitar suporte sem dado pessoal.</p>
+<p>O app mostra o ID na interface e permite <strong>remover cadastro</strong> pelo próprio cliente. Inscrições antigas (só JSON da subscription) seguem funcionando até o usuário ativar de novo e gravar o novo formato.</p>
+</div>
+
+<div class="box">
+<h2>Funções no Netlify</h2>
+<ul>
+<li><code>push</code> — inscrição, broadcast opcional, remoção por <code>deviceId</code></li>
+<li><code>radar</code> — agendamento (cron); lê <code>events.json</code> publicado e envia avisos na janela de ~15 minutos antes</li>
+</ul>
+<p>Variáveis de ambiente típicas: chaves <strong>VAPID</strong>, e para o <code>radar</code> uso de Blobs com <code>SITE_ID</code> e <code>NETLIFY_API_TOKEN</code> conforme o código do repositório.</p>
+</div>
+
+<div class="box">
+<h2>Links úteis</h2>
+<ul>
+<li>Repositório: <a href="https://github.com/rocksempu/ssrx-radar">github.com/rocksempu/ssrx-radar</a></li>
+<li>Site: <a href="https://ssrx-radar.netlify.app">ssrx-radar.netlify.app</a></li>
+</ul>
+</div>
+
+</body>
+</html>
