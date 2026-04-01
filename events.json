@@ -169,9 +169,9 @@
       "duracao": 30
     },
     {
-      "evento": "Teste",
+      "evento": "Teste02",
       "tipo": "Abertura",
-      "hora": "13:00",
+      "hora": "13:20",
       "duracao": 30
     }
   ],
