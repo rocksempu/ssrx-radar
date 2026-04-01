@@ -167,12 +167,6 @@
       "tipo": "Trégua",
       "hora": "11:00",
       "duracao": 30
-    },
-    {
-      "evento": "Teste02",
-      "tipo": "Abertura",
-      "hora": "13:20",
-      "duracao": 30
     }
   ],
   "quinta": [
