@@ -1,5 +1,6 @@
 import json
 import shutil
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -110,6 +111,7 @@ class RadarEventosGUI(tk.Tk):
         ttk.Button(actions, text="Salvar edicao", command=self._on_update).pack(fill="x", pady=6)
         ttk.Button(actions, text="Excluir selecionado", style="Danger.TButton", command=self._on_delete).pack(fill="x")
         ttk.Button(actions, text="Limpar campos", command=self._clear_form).pack(fill="x", pady=(6, 0))
+        ttk.Button(actions, text="Publicar no GitHub", command=self._on_publish).pack(fill="x", pady=(10, 0))
 
         right = tk.LabelFrame(body, text=" Eventos cadastrados ", bg="#111111", fg="#F3F4F6")
         right.pack(side="left", fill="both", expand=True)
@@ -238,6 +240,55 @@ class RadarEventosGUI(tk.Tk):
         self.var_tipo.set("")
         self.var_hora.set("")
         self.var_duracao.set("30")
+
+    def _run_git(self, *args):
+        return subprocess.run(
+            ["git", *args],
+            cwd=SCRIPT_DIR,
+            capture_output=True,
+            text=True,
+        )
+
+    def _on_publish(self):
+        ok = messagebox.askyesno(
+            "Confirmar publicacao",
+            "Deseja publicar agora?\n\nEsse processo executa:\n- git add events.json\n- git commit\n- git push",
+        )
+        if not ok:
+            return
+
+        try:
+            check_repo = self._run_git("rev-parse", "--is-inside-work-tree")
+            if check_repo.returncode != 0:
+                raise RuntimeError("Pasta atual nao e um repositorio git.")
+
+            add_result = self._run_git("add", "events.json")
+            if add_result.returncode != 0:
+                raise RuntimeError(f"Falha no git add:\n{add_result.stderr.strip()}")
+
+            diff_result = self._run_git("diff", "--cached", "--quiet")
+            if diff_result.returncode == 0:
+                messagebox.showinfo("Publicacao", "Sem alteracoes em events.json para publicar.")
+                self._set_status("Sem alteracoes para commit.")
+                return
+            if diff_result.returncode not in (0, 1):
+                raise RuntimeError(f"Falha ao verificar alteracoes:\n{diff_result.stderr.strip()}")
+
+            ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+            commit_msg = f"chore(events): atualiza agenda SSRX - {ts}"
+            commit_result = self._run_git("commit", "-m", commit_msg)
+            if commit_result.returncode != 0:
+                raise RuntimeError(f"Falha no git commit:\n{commit_result.stderr.strip()}")
+
+            push_result = self._run_git("push")
+            if push_result.returncode != 0:
+                raise RuntimeError(f"Falha no git push:\n{push_result.stderr.strip()}")
+
+            messagebox.showinfo("Sucesso", "Publicacao concluida com sucesso no GitHub.")
+            self._set_status("Publicacao concluida com sucesso.")
+        except Exception as exc:
+            messagebox.showerror("Erro ao publicar", str(exc))
+            self._set_status(f"Falha na publicacao: {exc}", error=True)
 
     def _render_lista(self):
         for item in self.tree.get_children():

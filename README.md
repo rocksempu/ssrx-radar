@@ -148,3 +148,38 @@ Agradecimento especial ao ❤️ Digs ❤️ por fortalecer a comunidade.
 
 Antes de pedir ajuda, veja:
 👉 https://ssrx-radar.netlify.app/faq.html
+
+---
+
+## 🛠️ Painel local de manutenção de eventos
+
+Para facilitar cadastro, edição e exclusão de eventos no `events.json`, existe um painel desktop:
+
+- Arquivo Python: `eventos_admin_gui.py`
+- Atalho Windows: `abrir_painel_eventos.bat`
+
+### Como usar
+
+1. Dê dois cliques em `abrir_painel_eventos.bat`
+2. Preencha os campos e clique em:
+   - `Adicionar` para novo evento
+   - `Salvar edicao` para atualizar evento selecionado
+   - `Excluir selecionado` para remover evento
+3. O script atualiza o `events.json` automaticamente e cria backup:
+   - `events_backup_YYYYMMDD-HHMMSS.json`
+
+### Requisitos
+
+- Python 3 instalado no Windows (ou em outro sistema operacional)
+- Não precisa de dependências externas
+
+### Publicacao no GitHub pelo proprio painel
+
+Depois de ajustar os eventos no painel, clique no botao `Publicar no GitHub`.
+
+O painel executa automaticamente:
+- `git add events.json`
+- commit com mensagem padrao e timestamp
+- `git push`
+
+Assim, toda a manutencao e publicacao ficam centralizadas no `eventos_admin_gui.py`.
