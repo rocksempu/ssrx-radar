@@ -13,6 +13,14 @@
   <h1>📡 SSRX Event Radar</h1>
 
   <button onclick="enablePush()">🔔 Ativar alertas</button>
+  <p class="device-id-line">
+    <span>ID deste aparelho (anonimizado, só para você localizar no suporte):</span><br />
+    <code id="deviceIdDisplay">—</code>
+    <button type="button" onclick="copyDeviceId()">Copiar ID</button>
+  </p>
+  <p>
+    <button type="button" onclick="removeMyPushSubscription()">Remover meu cadastro de alertas</button>
+  </p>
 
   <div class="bloco">
     <h2>🟢 Ativo Agora</h2>

@@ -4,3 +4,9 @@
 # Python cache
 __pycache__/
 *.py[cod]
+
+# Backups locais do painel de eventos (nao versionar)
+events_backup_*.json
+
+# Atalhos Windows soltos na pasta do projeto
+*.lnk

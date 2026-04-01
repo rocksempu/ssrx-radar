@@ -1,9 +1,23 @@
 export const config = {
-  schedule: "*/1 * * * *"
+  schedule: "*/1 * * * *",
 };
 
 import { getStore } from "@netlify/blobs";
 import webpush from "web-push";
+
+function parseStoredSubscription(raw) {
+  const parsed = JSON.parse(raw);
+  if (!parsed || typeof parsed !== "object") {
+    throw new Error("invalid");
+  }
+  if (parsed.subscription && parsed.subscription.endpoint) {
+    return { subscription: parsed.subscription };
+  }
+  if (parsed.endpoint) {
+    return { subscription: parsed };
+  }
+  throw new Error("invalid");
+}
 
 function horaParaMin(hora) {
   const [h, m] = hora.split(":").map(Number);
@@ -13,7 +27,7 @@ function horaParaMin(hora) {
 function agoraBrasil() {
   return new Date(
     new Date().toLocaleString("en-US", {
-      timeZone: "America/Sao_Paulo"
+      timeZone: "America/Sao_Paulo",
     })
   );
 }
@@ -24,7 +38,15 @@ function minutosAgoraBrasil() {
 }
 
 function diaHojeBrasil() {
-  const dias = ["domingo","segunda","terca","quarta","quinta","sexta","sabado"];
+  const dias = [
+    "domingo",
+    "segunda",
+    "terca",
+    "quarta",
+    "quinta",
+    "sexta",
+    "sabado",
+  ];
   return dias[agoraBrasil().getDay()];
 }
 
@@ -32,7 +54,7 @@ export default async () => {
   const store = getStore({
     name: "subscriptions",
     siteID: process.env.SITE_ID,
-    token: process.env.NETLIFY_API_TOKEN
+    token: process.env.NETLIFY_API_TOKEN,
   });
 
   webpush.setVapidDetails(
@@ -50,7 +72,6 @@ export default async () => {
 
   const { blobs } = await store.list();
 
-  // 🧹 LIMPEZA DOS sent- DE DIAS ANTERIORES
   for (const b of blobs) {
     if (b.key.startsWith("sent-") && !b.key.startsWith(`sent-${hoje}`)) {
       await store.delete(b.key);
@@ -62,7 +83,6 @@ export default async () => {
     const diff = inicio - agoraMin;
 
     if (diff <= 15 && diff > 0) {
-
       const idEvento = `${hoje}-${e.evento}-${e.tipo}-${e.hora}`;
 
       const jaEnviado = await store.get(`sent-${idEvento}`);
@@ -70,16 +90,16 @@ export default async () => {
 
       const payload = JSON.stringify({
         title: "⏰ SSRX Radar",
-        body: `${e.evento} (${e.tipo}) abre em instantes!`
+        body: `${e.evento} (${e.tipo}) abre em instantes!`,
       });
 
-      // 🔥 SOMENTE subscriptions
       for (const b of blobs) {
         if (b.key.startsWith("sent-")) continue;
 
         try {
-          const sub = JSON.parse(await store.get(b.key));
-          await webpush.sendNotification(sub, payload);
+          const raw = await store.get(b.key);
+          const { subscription } = parseStoredSubscription(raw);
+          await webpush.sendNotification(subscription, payload);
         } catch {}
       }
 
